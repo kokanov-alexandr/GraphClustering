@@ -34,7 +34,7 @@ def getThresholdDistance(distMatrix):
         for j in i:
             s += j
     s /= len(distMatrix) ** 2
-    return s * 0.4
+    return s * 0.3
 
 def getClusters(points):
     distanceMatrix = getDistancesMatrix(points)

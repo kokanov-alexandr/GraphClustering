@@ -6,13 +6,24 @@ from tests import *
 import matplotlib.lines as mlines
 import matplotlib.pyplot as plt
 
-endCoords = 10 ** 4
+endCoords = 10 ** 4 * 2
 
-def genaratePoints(countPoinst):
+def genaratePoints(countPoints):
+    m = random.uniform(0.2, 2.0)
+    b = random.uniform(0, endCoords)
     points = []
-    for _ in range(countPoinst):
-        points.append(Point(random.randint(0, endCoords), random.randint(0, endCoords), random.randint(0, endCoords)))
+
+    for _ in range(countPoints // 2):
+        x = random.uniform(0, endCoords)
+        y = m * x + b + random.uniform(-4000, 3500)
+        points.append(Point(x, y, random.randint(1500, 2500)))
+
+    for _ in range(countPoints // 2):
+        x = random.uniform(6000, endCoords - 6000)
+        y = m * x + b + random.uniform(-1000, 1000)
+        points.append(Point(x, y, random.randint(2000, 2500)))
     return points
+
 
 
 def showPoints(points):
@@ -38,7 +49,7 @@ def showPoints(points):
             y.append(points[j].y)
             z.append(points[j].z)
 
-    coords = [0, 3000, 6000, 9000]
+    coords = [0, 5000, 10000, 15000, 20000]
     ax.set_xticks(coords)
     ax.set_yticks(coords)
     ax.set_zticks(coords)
@@ -53,7 +64,7 @@ def showPoints(points):
     plt.legend(handles=[redBall, blueBall], bbox_to_anchor=(1.3, 1.1))
 
     ax.scatter(x, y, z, c = colors, alpha=1.0)
-    ax.view_init(elev=40, azim=30)  # Например, повернуть по оси Z на 30 градусов
+    ax.view_init(elev=40, azim=120)
 
     plt.show()
 
@@ -63,6 +74,3 @@ points = genaratePoints(50)
 showPoints(points)
 
 unittest.main()
-
-
-
