@@ -1,5 +1,6 @@
 import unittest
 from Point import Point
+from clustering import *
 
 class TestPoint(unittest.TestCase):
     def testCreatePoint1(self):
@@ -24,4 +25,22 @@ class TestPoint(unittest.TestCase):
         distance = point.getDistance(Point(0, 0, 0))
         self.assertEqual(distance, 0)
 
-unittest.main()
+
+class TestClustering(unittest.TestCase):
+    def testClustering1(self):
+        points = [Point(1, 2, 6), Point(1, 3, 6), Point(7, 8, 9)]
+        answer = [[0, 1], [2]]
+        result = getClusters(points)
+        for i in result:
+            i.sort()
+        self.assertEqual(result, answer)
+
+    def testClustering2(self):
+        points = [Point(1, 1, 1), Point(4, 4, 4), Point(7, 7, 7)]
+        answer = [[0], [1], [2]]
+        result = getClusters(points)
+        for i in result:
+            i.sort()
+        self.assertEqual(result, answer)
+
+
