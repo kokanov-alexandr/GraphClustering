@@ -26,16 +26,98 @@ class TestPoint(unittest.TestCase):
         self.assertEqual(distance, 0)
 
 
+
+class TestGetDistanceMatrix(unittest.TestCase):
+    def testEmptyMatrix(self):
+        points = []
+        result = getDistancesMatrix(points)
+        self.assertEqual(result, [])
+
+    def testOnePoint(self):
+        points = [Point(1, 2, 6)]
+        result = getDistancesMatrix(points)
+        self.assertEqual(result, [[0]])
+        
+    def testTwoPoints(self):
+        point1 = Point(1, 2, 3)
+        point2 = Point(4, 5, 6)
+        points = [point1, point2]
+        result = getDistancesMatrix(points)
+        self.assertEqual(result, [[0, 5.196152422706632], [5.196152422706632, 0]])
+
+    def testSymmetricProperty(self):
+        point1 = Point(1, 2, 3)
+        point2 = Point(4, 5, 6)
+        points = [point1, point2]
+        result = getDistancesMatrix(points)
+        self.assertEqual(result[0][1], result[1][0])
+
+
+import unittest
+from clustering import getAdjacencyMatrix
+
+class TestGetAdjacencyMatrix(unittest.TestCase):
+    def testEmptyMatrix(self):
+        distMatrix = []
+        maxDistance = 10
+        result = getAdjacencyMatrix(distMatrix, maxDistance)
+        self.assertEqual(result, [])
+
+    def testOnePoint(self):
+        distMatrix = [[0]]
+        maxDistance = 10
+        result = getAdjacencyMatrix(distMatrix, maxDistance)
+        self.assertEqual(result, [[1]])
+
+    def testTwoPoints(self):
+        distMatrix = [
+            [0, 5], 
+            [5, 0]
+        ]
+        maxDistance = 10
+        result = getAdjacencyMatrix(distMatrix, maxDistance)
+        self.assertEqual(result, [[1, 1], [1, 1]])
+
+    def testTwoPointsBeyondMaxDist(self):
+        distMatrix = [
+            [0, 15], 
+            [15, 0]
+        ]
+        maxDistance = 10
+        result = getAdjacencyMatrix(distMatrix, maxDistance)
+        self.assertEqual(result, [[1, 0], [0, 1]])
+
+    def testSymmetricProperty(self):
+        distMatrix = [
+            [0, 5, 10], 
+            [5, 0, 15], 
+            [10, 15, 0]
+        ]
+        maxDistance = 10
+        result = getAdjacencyMatrix(distMatrix, maxDistance)
+        self.assertEqual(result, [[1, 1, 0], [1, 1, 0], [0, 0, 1]])
+
+
+
 class TestClustering(unittest.TestCase):
-    def testClustering1(self):
-        points = [Point(1, 2, 6), Point(1, 3, 6), Point(7, 8, 9)]
+    def testEmptyMatrix(self):
+        result = getClusters([])
+        self.assertEqual(result, [])
+
+    def testOnePoint(self):
+        points = [Point(1, 2, 6)]
+        result = getClusters(points)
+        self.assertEqual(result, [[0]])
+
+    def testFarPoint(self):
+        points = [Point(1, 2, 6), Point(1, 2, 6.1), Point(7, 8, 9)]
         answer = [[0, 1], [2]]
         result = getClusters(points)
         for i in result:
             i.sort()
         self.assertEqual(result, answer)
 
-    def testClustering2(self):
+    def testDistantPoints(self):
         points = [Point(1, 1, 1), Point(4, 4, 4), Point(7, 7, 7)]
         answer = [[0], [1], [2]]
         result = getClusters(points)
@@ -43,4 +125,14 @@ class TestClustering(unittest.TestCase):
             i.sort()
         self.assertEqual(result, answer)
 
+    def testTwoClusters(self):
+        points = [Point(1, 1, 1), Point(1, 1, 1.5), Point(1, 1, 2), Point(10, 10, 10), Point(10, 10, 10.5), Point(10, 10, 10.5)]
+        answer = [[0, 1, 2], [3, 4, 5]]
+        result = getClusters(points)
+        for i in result:
+            i.sort()
+        self.assertEqual(result, answer)
 
+
+
+unittest.main()

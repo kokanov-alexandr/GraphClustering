@@ -1,6 +1,4 @@
 from Point import Point
-from scipy.spatial import distance
-import math
 
 def getDistancesMatrix(points):
     n = len(points)
@@ -33,8 +31,10 @@ def getThresholdDistance(distMatrix):
     for i in distMatrix:
         for j in i:
             s += j
-    s /= len(distMatrix) ** 2
-    return s * 0.3
+    count = len(distMatrix) ** 2
+    if count != 0: 
+        s /= len(distMatrix) ** 2
+    return s * 0.1
 
 def getClusters(points):
     distanceMatrix = getDistancesMatrix(points)

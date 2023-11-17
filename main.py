@@ -24,8 +24,6 @@ def genaratePoints(countPoints):
         points.append(Point(x, y, random.randint(2000, 2500)))
     return points
 
-
-
 def showPoints(points):
     clusters = getClusters(points)
     largestClaster = max(clusters, key = len)
@@ -35,8 +33,7 @@ def showPoints(points):
     countBlue = len(points) - countRed
     colors = ["red"] * countRed + ["blue"] * countBlue
 
-    print(largestClaster)
-    fig = plt.figure()  
+    fig = plt.figure()
     ax = fig.add_subplot(111, projection='3d')
 
     x = [points[i].x for i in largestClaster]
@@ -63,14 +60,13 @@ def showPoints(points):
 
     plt.legend(handles=[redBall, blueBall], bbox_to_anchor=(1.3, 1.1))
 
-    ax.scatter(x, y, z, c = colors, alpha=1.0)
+    ax.scatter(x, y, z, c = colors, alpha=1.0, s = 5)
     ax.view_init(elev=40, azim=120)
 
     plt.show()
 
 
-
-points = genaratePoints(50)
-showPoints(points)
+points = genaratePoints(500)
+# showPoints(points)
 
 unittest.main()
