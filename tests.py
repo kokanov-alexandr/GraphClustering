@@ -1,6 +1,7 @@
 import unittest
 from Point import Point
 from clustering import *
+from clustering import getAdjacencyMatrix
 
 class TestPoint(unittest.TestCase):
     def testCreatePoint1(self):
@@ -53,8 +54,6 @@ class TestGetDistanceMatrix(unittest.TestCase):
         self.assertEqual(result[0][1], result[1][0])
 
 
-import unittest
-from clustering import getAdjacencyMatrix
 
 class TestGetAdjacencyMatrix(unittest.TestCase):
     def testEmptyMatrix(self):
@@ -133,6 +132,3 @@ class TestClustering(unittest.TestCase):
             i.sort()
         self.assertEqual(result, answer)
 
-
-
-unittest.main()

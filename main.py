@@ -66,7 +66,8 @@ def showPoints(points):
     plt.show()
 
 
-points = genaratePoints(500)
-# showPoints(points)
 
-unittest.main()
+
+points = genaratePoints(100)
+showPoints(points)
+
